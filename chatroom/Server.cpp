@@ -21,6 +21,7 @@ Server::~Server()
 
 int Server::wsaInit() {
 	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	
 	return result;
 }
 
@@ -73,53 +74,23 @@ int Server::acceptConnection(int& socket_listener) {
 	return clientSocket;
 }
 
-void Server::recvConnection(int& result, int& socket, std::stringstream& response, 
-	std::stringstream& response_body) {
+int Server::recvConnection(int& result, int& socket, char* buf) {
 
-	char buf[BUFFER_SIZE];
+	buf[BUFFER_SIZE];
 	result = recv(socket, buf, BUFFER_SIZE, 0);
-	bool working = true;
-	while (working) {
-		if (result == SOCKET_ERROR) {
-			// ошибка получения данных
-			std::cerr << "recv failed: " << result << "\n";
-			closesocket(socket);
-			working = false;
-		}
-		else if (result == 0) {
-			// Connection was closed by the client
-			std::cerr << "connection closed...\n";
-		}
-		else if (result > 0) {
-			buf[result] = '\0';
-			// Данные успешно получены
-		// формируем тело ответа (HTML)
-			response_body << "<title>Test C++ HTTP Server</title>\n"
-				<< "<h1>Test page</h1>\n"
-				<< "<p>This is body of the test page...</p>\n"
-				<< "<h2>Request headers</h2>\n"
-				<< "<pre>" << buf << "</pre>\n"
-				<< "<em><small>Test C++ Http Server</small></em>\n";
-
-			// Формируем весь ответ вместе с заголовками
-			response << "HTTP/1.1 200 OK\r\n"
-				<< "Version: HTTP/1.1\r\n"
-				<< "Content-Type: text/html; charset=utf-8\r\n"
-				<< "Content-Length: " << response_body.str().length()
-				<< "\r\n\r\n"
-				<< response_body.str();
-
-			// Отправляем ответ клиенту с помощью функции send
-			result = send(socket, response.str().c_str(),
-				response.str().length(), 0);
-
-			if (result == SOCKET_ERROR) {
-				// произошла ошибка при отправле данных
-				std::cerr << "send failed: " << WSAGetLastError() << "\n";
-			}
-			// Закрываем соединение к клиентом
-			closesocket(socket);
-		}
+	std::cout << "Result in recvConnection(): " << socket << std::endl;
+	if (result == SOCKET_ERROR) {
+		std::cerr << "recv failed: " << result << "\n";
+		closesocket(socket);
+		return 0;
+	}
+	else if (result == 0) {
+		// Connection was closed by the client
+		std::cerr << "connection closed...\n";
+		return 0;
+	}
+	else if (result > 0) {
+		return result;
 	}
 
 }

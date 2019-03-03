@@ -22,8 +22,7 @@ public:
 	int bindAddr(int& result, int& listener);
 	int acceptConnection(int& socket);
 
-	void recvConnection(int & result, int& socket, std::stringstream& response,
-		std::stringstream& response_body);
+	int recvConnection(int & result, int& socket, char* buf);
 
 private:
 	WSADATA wsaData;

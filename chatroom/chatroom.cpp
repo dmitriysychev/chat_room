@@ -16,6 +16,7 @@ int main()
 
 	// Preparation steps
 	int result_handler = server.wsaInit();
+	
 	if (result_handler != 0) {
 		std::cerr << "WSAStartup failed: " << result_handler << "\n";
 		return result_handler;
@@ -25,7 +26,7 @@ int main()
 	// Upon successful preparation of WSA, socket opening and starting is executed
 	server.start(sock_handler);
 	server.bindAddr(result_handler, sock_handler);
-
+	
 	if (listen(sock_handler, SOMAXCONN) == SOCKET_ERROR) {
 		std::cerr << "listen failed with error: " << WSAGetLastError() << "\n";
 		closesocket(sock_handler);
@@ -33,8 +34,32 @@ int main()
 		return 1;
 	} 
 	client_socket = server.acceptConnection(sock_handler);
-	server.recvConnection(result_handler, sock_handler, feedback, feedback_body);
+
+	char buf[1024];
+	int result = server.recvConnection(result_handler, sock_handler, buf);
+	std::cout << "Result handler = " << result_handler << std::endl;
+	if (result != 0) {
+		buf[result_handler] = '\0';
+		feedback_body << "<title>Test C++ HTTP Server</title>\n"
+			<< "<h1>Test page</h1>\n"
+			<< "<p>This is body of the test page...</p>\n"
+			<< "<h2>Request headers</h2>\n"
+			<< "<pre>" << buf << "</pre>\n"
+			<< "<em><small>Test C++ Http Server</small></em>\n";
 
 
+		feedback << "HTTP/1.1 200 OK\r\n"
+			<< "Version: HTTP/1.1\r\n"
+			<< "Content-Type: text/html; charset=utf-8\r\n"
+			<< "Content-Length: " << feedback_body.str().length()
+			<< "\r\n\r\n"
+			<< feedback_body.str();
 
+		result = send(sock_handler, feedback.str().c_str(),
+			feedback.str().length(), 0);
+		if (result == SOCKET_ERROR) {
+			std::cerr << "send failed: " << WSAGetLastError() << "\n";
+		}
+	}
+	closesocket(sock_handler);
 }
