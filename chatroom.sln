@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatroom", "chatroom\chatroom.vcxproj", "{00F0ED90-867A-499A-9651-CA077797E58A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatroom_client", "ConsoleApplication1\ConsoleApplication1.vcxproj", "{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{00F0ED90-867A-499A-9651-CA077797E58A}.Release|x64.Build.0 = Release|x64
 		{00F0ED90-867A-499A-9651-CA077797E58A}.Release|x86.ActiveCfg = Release|Win32
 		{00F0ED90-867A-499A-9651-CA077797E58A}.Release|x86.Build.0 = Release|Win32
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Debug|x64.ActiveCfg = Debug|x64
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Debug|x64.Build.0 = Debug|x64
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Debug|x86.ActiveCfg = Debug|Win32
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Debug|x86.Build.0 = Debug|Win32
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Release|x64.ActiveCfg = Release|x64
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Release|x64.Build.0 = Release|x64
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Release|x86.ActiveCfg = Release|Win32
+		{42D3C834-0531-4FB5-AE07-FF60BB9D5D43}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
