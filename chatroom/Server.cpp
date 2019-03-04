@@ -11,3 +11,8 @@ Server::Server()
 Server::~Server()
 {
 }
+
+void Server::d_print()
+{
+	std::cout << "d_print " << delim << std::endl;
+}
