@@ -1,7 +1,8 @@
 ﻿#include "pch.h"
 #include <iostream>
+#include "Server.h"
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	Server server = Server();
 }
